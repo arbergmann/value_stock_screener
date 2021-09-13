@@ -1,0 +1,5 @@
+python = 3.7.4
+pandas = 0.25.1
+numpy = 1.17.2
+yfinance = 0.1.54
+quandl = 3.5.2
