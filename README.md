@@ -55,7 +55,7 @@ additional pricing data per key.
 * <b>Format</b>: Table Views
 * <b>Access method</b>: API via a yfinance Python Library
 
-## Data Manipulation Methods and Process Analysis
+### Data Manipulation Methods and Process Analysis
 #### Part 1 - Collecting stock ticker symbols from popular indices:
 Initial collection of stock ticker data utilized a pandas read_html call to the corresponding Wikipedia website for Data Source #2. This generates a dataframe that we will later leverage for iteration through the Quandl and yfinance APIs. The dataframe initially contains nine columns, but we will remove the SEC filings, Headquarters Location, Date First Added, and CIK columns as they will not be useful in our analysis. (`data_collector.sp500_list_retrieval()`)
 
@@ -75,7 +75,7 @@ In step 3, we take the data acquired from Steps 2a and 2b and start comparing me
 
 In order to better demonstrate the process of the value stock picker analysis, we produced a set of visualizations that show how stocks are being filtered down. Important note - the actual Python code that applies the value filters described earlier in this document are applied in parallel and not incrementally as seen below, <i>but for the purpose of illustrating the impact of each these filters</i>, we’ve broken down each step to show the impact that these filters have on resulting stock picks.
 
-## Looking at the Data and Generating Hypotheses
+### Looking at the Data and Generating Hypotheses
 Before we start filtering data, we can see the distribution of S&P 500 companies by sector. Our initial dataset, once we have appended the appropriate fundamentals and pricing data and eliminated any tickers with missing data points, will contain 497 stocks.
 
 <p align="center"><img src='assets/sp500_dist.png' alt='S&P 500 Distribution' width="400"><br>S&P 500 Distribution</p>
@@ -89,7 +89,7 @@ upon whose revenue they rely. Because of this, we hypothesize that our results w
 
 To explore this hypothesis further, we will apply a filter that checks for this concept of “book value”. As with all of our filtering criteria, a boolean column will be created for each filtering metric, and if a stock meets the criteria it is labeled True, if it does not or contains missing data pertaining to those metrics, it is labeled False.
 
-## Step 1: Filter for Price-to-Book and Book Value > Current Price
+### Step 1: Filter for Price-to-Book and Book Value > Current Price
 <i>Reference Function: `filters.pb_price_target()`</i>
 </br>
 The first step in the filtering process will be to check the Price-to-Book ratio, and then compare the book value per share to the current share price.
@@ -106,7 +106,7 @@ Once we retain only companies with a P/B greater than 0 and less than 1, and a c
 As mentioned earlier, a low book value per share and P/B below 1 doesn’t necessarily mean a good deal. It can also indicate that a company is in trouble. So, we will apply additional filters to try to identify trends that would indicate a possible company with strong underlying financials.
 
 
-## Step 2: Filter for ROE > 10%
+### Step 2: Filter for ROE > 10%
 <i>Reference Function: `filters.roe()`</i>
 </br>
 The next filter we will apply is Return on Equity (ROE). ROE is considered the return on net assets, and indicates the effectiveness of management to use investors’ money to generate profits. It shows the rate at which management is growing the company’s value, and is calculated as the Annual Net Income divided by the Average Shareholder’s Equity (annual).
@@ -119,7 +119,7 @@ A lot of the stocks remaining from the previous filter are under-valued, but see
 
 This filtering allows us to isolate who has a track record to actually generate a decent return on our investment, based on recent past performance.
 
-## Step 3: Filter for Positive ROA Year over Year
+### Step 3: Filter for Positive ROA Year over Year
 <i>Reference Function: `filters.pos_yoy_roa()`</i>
 </br>
 Since a large majority of our filtering and criteria are dependent on a company’s assets (book value, etc.), we want to make sure that management for each of these companies is effectively using these assets to generate profit. To do this, we will look at Return on Assets (ROA), or a measure that determines how much profit a company earns for every dollar of its assets. ROA is calculated as the Annual Net Income divided by Total Assets. It is similar to ROE, but focuses more on assets than shareholder equity.
@@ -132,7 +132,7 @@ We want ROA to be as high as possible, but because these are value stocks they m
 
 After applying this filter, we can see that only a few financial firms are eliminated. This is likely because financial firms can be known to have high leverage ratios to fund their lines of business, like loans, etc. The filter sees no impact to the Information Technology or Real Estate sectors.
 
-## Step 4: Filter for Positive EPS Year over Year
+### Step 4: Filter for Positive EPS Year over Year
 <i>Reference Function: `filters.pos_yoy_eps()`</i>
 </br>
 Earnings per Share (EPS) is a very fundamental metric in the financial world. It indicates the dollar value the company is generating for each outstanding share. It is calculated as the Annual Net Income divided by the number of diluted outstanding shares. If we see an increase in EPS over time, it is a sign that the company is growing its bottom line and the “slice of the pie” that each shareholder gets.
@@ -146,7 +146,7 @@ The final set of stocks remaining includes 4 stocks from the Financial sector, 1
 
 <p align="center"><img src='assets/remaining.png' alt='Remaining Stock Distribution' width="400"><br>Remaining Stock  Distribution</p>
 
-## Final Output and Analysis
+### Final Output and Analysis
 The final output of value stocks available for investment, as determined by our criteria, is outlined below, sorted by the percentage below their book value per share, from greatest to least. We utilized the `aggregations.most_recent()` function to pull the most recent observation (valuation) of each ticker and aggregate them all in a dataframe. We then utilized `aggregations.filter_for_value_stocks()` to return only those stocks that had “True” values in all of the filtering columns developed above - recall, all of these happen in parallel in the screener itself. If even one criterium was labeled as “False,” it did not match what we were looking for in a value stock and was eliminated. The output was then reduced to more relevant metrics (common ones used in stock valuation) using the `aggregations.clean_output()` function. We then pass through all of our functions in order from start to finish in the `run_value_screener()` function in the `value_screener` module.
 
 The final product produces the following output:
@@ -163,13 +163,12 @@ One of the biggest challenges in finance is that everyone has an opinion on the 
 An interesting takeaway from this is analysis is, as we suspected, financials dominate the value space right now. That said, it appears that they appear to have high debt, possibly making them unsuitable for some investors. Such investors may want to add a debt-to-equity filter, or swap it out for one of the others.
 Ultimately, some of the most compelling options are the two stocks outside of the financials sector. That said, current market environments with work-from-home actually may make Xerox (whose primary source of income is a subscription model for office printer usage) a dangerous play, a factor that cannot be coded with a filter, but may be able to be accounted for with a threshold on a margin of safety. What this shows us is that this screener is great for narrowing down options, but for common investors should not be used without a little more manual analysis.
 
-## Statement of Work:
+### Statement of Work:
 Our team utilized a joint effort, capitalizing on each member’s skillset and strengths, and communicating steps throughout. Chris Thorne, with a data product management background, created all of the visualizations for this project as well as the corresponding notebook, and configured the Google Collab and Google Drive environments wherein the team collaborated to get the initial scripts running smoothly. Allie Bergmann, with a fintech and algorithmic trading background, determined the pricing and valuation metrics that would be used in the analysis. She wrote the majority of the screener code itself with help from Chris in researching and exploring the Quandl library, and bundled the final code into script files and Jupyter notebooks. The financial references in this report were derived from Allie’s financial background and previous experience in value investing.
 
-<i>
-Note: This project utilizes a paid student license, and this API key and resulting data may not be distributed beyond the grading of the project.
+### Disclosures
+<i>Note: This project utilizes a paid student license, and this API key and resulting data may not be distributed beyond the grading of the project.</i>
 
-Disclaimer: This report is for educational and research purposes only and is not intended to be used as an official investment recommendation. All investment/financial opinions expressed in this document are from the personal research and experience of the project owners and are intended as educational material. Although best efforts are made to ensure that all information is accurate and up-to-date, occasionally unintended errors or misprints may occur in the data. We make no guarantees of financial returns based on this analysis. It is important to do your own analysis before making any investment based on your own personal circumstances. All financial decisions should be made with the help of a qualified financial professional.
+<i>Disclaimer: This report is for educational and research purposes only and is not intended to be used as an official investment recommendation. All investment/financial opinions expressed in this document are from the personal research and experience of the project owners and are intended as educational material. Although best efforts are made to ensure that all information is accurate and up-to-date, occasionally unintended errors or misprints may occur in the data. We make no guarantees of financial returns based on this analysis. It is important to do your own analysis before making any investment based on your own personal circumstances. All financial decisions should be made with the help of a qualified financial professional.</i>
 
-At this time, neither author owns any shares in any of the outputs as of 09/24/2020 and neither has any known conflict of interest.  
-</i>
+<i>At this time, neither author owns any shares in any of the outputs as of 09/24/2020 and neither has any known conflict of interest.</i>
