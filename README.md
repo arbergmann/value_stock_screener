@@ -150,7 +150,7 @@ The final set of stocks remaining includes 4 stocks from the Financial sector, 1
 The final output of value stocks available for investment, as determined by our criteria, is outlined below, sorted by the percentage below their book value per share, from greatest to least. We utilized the `aggregations.most_recent()` function to pull the most recent observation (valuation) of each ticker and aggregate them all in a dataframe. We then utilized `aggregations.filter_for_value_stocks()` to return only those stocks that had “True” values in all of the filtering columns developed above - recall, all of these happen in parallel in the screener itself. If even one criterium was labeled as “False,” it did not match what we were looking for in a value stock and was eliminated. The output was then reduced to more relevant metrics (common ones used in stock valuation) using the `aggregations.clean_output()` function. We then pass through all of our functions in order from start to finish in the `run_value_screener()` function in the `value_screener` module.
 
 The final product produces the following output:
-<p align="center"><img src='assets/final_res.png' alt='Final Results' width="400"><br>Final Results</p>
+<p align="center"><img src='assets/final_res.png' alt='Final Results' width="1000"><br>Final Results</p>
 
 When looking at this data, we can see that an investor may want to make other considerations, such as a particular dividend yield, debt-to-equity ratios, or P/E ratios. For example, per our earlier discussions, if an investor wanted to pick the stock with the highest ROA and lowest Debt-to-Equity, they may want to look at KIM, so long as they feel the margin of safety is appropriate.
 
