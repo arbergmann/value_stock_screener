@@ -28,3 +28,29 @@ Questions we want to answer include:
 * Is the current stock price above or below that valuation?
 * Which of the stocks in the popular indexes, like the S&P 500, are trading below our valuation, and thus have the potential for greater returns?
 
+
+### Project Summary
+#### Data Source #1 - US Equities Fundamentals Data:
+* <b>Name</b>: Quandl - “Core US Fundamentals Data (Published by Sharadar)”
+* <b>Description</b>: Updated daily, this database provides 5 years of history, for 111 essential fundamental indicators and financial ratios.
+* <b>Size</b>: Dictionary of 499 keys, containing 10,873 records of data (total), with 111 columns of fundamentals metrics data per key.
+* <b>Data Location</b>:https://www.quandl.com/databases/SF1
+* <b>Format</b>: Table Views
+* <b>Access Method</b>: API via a Quandl Python Library (Paid Academic License Acquired)
+
+#### Data Source #2 - US Equities - S&P 500:
+* <b>Name</b>: List of S&P 500 companies
+* <b>Description</b>: List of current companies in the S&P 500.
+* <b>Size</b>: Dataframe containing 505 rows and 5 columns of data.
+* <b>Data Location</b>: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
+* <b>Format</b>: Table Views
+* <b>Access Method</b>: Fetching and parsing an HTML page
+
+#### Data Source #3 - US Equities Historic Prices:
+* <b>Name</b>: yfinance
+* <b>Description</b>: An API to download 5 years of historical market data from Yahoo! Finance
+* <b>Size</b>: Dictionary of 497 keys, containing 10,829 records of data (total), with 7 columns of
+additional pricing data per key.
+* <b>Data location</b>: https://pypi.org/project/yfinance/
+* <b>Format</b>: Table Views
+* <b>Access method</b>: API via a yfinance Python Library
