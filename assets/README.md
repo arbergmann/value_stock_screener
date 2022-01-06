@@ -78,7 +78,7 @@ In order to better demonstrate the process of the value stock picker analysis, w
 ## Looking at the Data and Generating Hypotheses
 Before we start filtering data, we can see the distribution of S&P 500 companies by sector. Our initial dataset, once we have appended the appropriate fundamentals and pricing data and eliminated any tickers with missing data points, will contain 497 stocks.
 
-<img src="file://sp500_dist.png" alt="alt text" width="200"/>
+<p align="center"><img src='sp500_dist.png' alt='S&P 500 Distribution' width="400"><br>S&P 500 Distribution</p>
 
 The S&P 500 is weighted by market capitalization, meaning larger companies have more impact on the movement of the index, but those companies may fall in different sectors, as we can see below. Coincidentally, at the time of this writing, Information Technology and Consumer Discretionary contain some of the largest companies (MSFT, AAPL, FB, etc.) and are also some of our largest subsets.
 
